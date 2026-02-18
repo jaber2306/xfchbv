@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+
+<title>exp</title>
+<style>
+body {
+  font-family: 'Montserrat', sans-serif;
+  margin: 0; padding: 0; box-sizing: border-box;
+  background: linear-gradient(to bottom, #1a1a2e, #16213e, #0f3460);
+  color: #fff;
+}
+
+header { display: flex; justify-content: space-between; align-items: center; padding: 0; }
+.logo img { width: 190px; height: auto; }
+.nav-links { display: flex; gap: 40px; align-items: center; }
+.nav-links a { color: #fff; text-decoration: none; font-size: 16px; opacity: 0; transform: translateY(20px); transition: opacity 1s ease, transform 1s ease; }
+.nav-links a.show { opacity: 1; transform: translateY(0); }
+.nav-links a:hover { color: #66b3ff; text-shadow: 0 0 10px #0ff,0 0 20px #0ff,0 0 40px #0ff; }
+
+.list-container { display: flex; align-items: center; gap: 20px; }
+.list-button { padding: 10px 20px; background: #1a1a2e; color: #fff; border: none; border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 10px; }
+.list-button:hover { background: #66b3ff; }
+
+.list-content {
+  display: none;
+  position: absolute;
+  top: 80px;
+  right: 30px;
+  background: #1a1a2e;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  width: 300px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+.list-content p { margin: 10px 0; font-size: 16px; font-weight: bold; color: #fff; }
+.list-content ul { list-style: none; padding: 0; margin: 0; }
+.list-content ul li { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; font-size: 16px; color: #fff; border-bottom: 1px solid #444; }
+.list-content ul li:last-child { border-bottom: none; }
+.list-content a { color: #fff; text-decoration: none; transition: color 0.3s; }
+.list-content ul li i:hover { color: #66b3ff; }
+.list-content a:hover { color: #66b3ff; }
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+  border-top: 1px solid #444;
+  padding-top: 10px;
+  justify-content: center;
+  align-items: center;
+}
+.social-icons a { color: #fff; font-size: 20px; transition: all 0.3s ease; }
+.social-icons a:hover { color: #00f; text-shadow: 0 0 5px #00f,0 0 10px #00f,0 0 15px #00f; }
+.social-icons .separator { height: 30px; width: 1px; background-color: #444; }
+
+.bars-container { padding: 50px 80px; }
+.adobe-container { display: flex; align-items: center; margin-bottom: 10px; }
+.adobe-line { display: inline-block; width: 50px; height: 2px; background-color: #fff; margin-right: 10px; }
+.adobe-experience { font-size: 1.5rem; color: #fff; }
+
+.bar { display: flex; align-items: center; width: 100%; gap: 10px; margin-bottom: 15px; }
+.bar:nth-child(odd) { flex-direction: row-reverse; }
+.bar-fill { background: #1C325B; height: 60px; width: 45%; position: relative; border-radius: 30px; overflow: hidden; }
+.bar-fill span {
+  position: absolute; top: 0; left: 0; height: 100%; background: #153F73;
+  display: flex; justify-content: center; align-items: center; color: white;
+  font-size: 1rem; font-weight: bold; text-shadow: 1px 1px 2px black; border-radius: 25px;
+  width: 0%; overflow: hidden;
+  white-space: nowrap;
+}
+.percentage-box { width: 60px; height: 40px; background: #265A99; border-radius: 30px; display: flex; justify-content: center; align-items: center; font-size: 1rem; font-weight: bold; color: white; box-shadow: 0 4px 6px rgba(0,0,0,0.2); transition: transform 0.3s ease, background 0.3s ease; }
+.percentage-box:hover { background: white; transform: scale(1.1); color: #003366; }
+
+footer { background-color: #1a1a2e; color: #fff; text-align: center; padding: 20px 0; margin-top: 100px; }
+footer p { font-size: 0.6rem; }
+footer a { text-decoration: none; color: #0f3460; font-weight: bold; }
+footer a:hover { color: #1F509A; }
+
+.whatsapp-float { position: fixed; left: 20px; bottom: 20px; z-index: 10000; }
+.whatsapp-float a { display: flex; align-items: center; justify-content: center; background-color: #1a1a2e; width: 60px; height: 60px; border-radius: 50%; box-shadow: 0 4px 8px rgba(0,0,0,0.3); color: #fff; font-size: 30px; transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s; text-decoration: none; }
+.whatsapp-float a:hover { transform: scale(1.2); box-shadow: 0 6px 12px rgba(0,0,0,0.4); background-color: #66b3ff; }
+
+@media (max-width: 768px) {
+  .bar { flex-direction: column !important; align-items: flex-start; }
+  .bar-fill { width: 100%; min-width: 0; }
+  .percentage-box { width: 100%; justify-content: flex-start; padding-left: 10px; font-size: 0.9rem; }
+ .bar {
+    flex-direction: row !important; /* خليها تبقى أفقي */
+    align-items: center;
+    gap: 10px;
+  }
+  .bar-fill {
+    width: 70%; /* اعطيها عرض مناسب للشاشة الصغيرة */
+    min-width: 0;
+  }
+  .percentage-box {
+    width: 25%; /* النسبة جنب البار */
+    justify-content: center;
+    font-size: 0.9rem;
+  }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-container"><div class="logo"><img src="https://image2url.com/r2/default/images/1770457293951-44c94a01-df0f-46b2-bf70-102efba329e5.png" alt="Logo"></div></div>
+  <nav><div class="nav-links"><a href="index.html">Home</a><a href="pro.html">Process</a><a href="exp.html">Experience</a></div></nav>
+  <div class="list-container">
+    <button class="list-button" onclick="toggleList()"><i class="fas fa-list"></i></button>
+    <div id="listItems" class="list-content">
+      <p>Contact Info</p>
+      <ul>
+        <li><i class="fas fa-phone-alt"></i><a href="tel:+962788091144">+962788091144</a></li>
+        <li><i class="fas fa-map-marker-alt"></i><a href="https://www.google.com/maps" target="_blank"> Jordan, Amman city </a></li>
+        <li><i class="fas fa-envelope"></i><a href="mailto:a.jaber.qj@gmail.com">a.jaber.qj@gmail.com</a></li>
+      </ul>
+      <div class="social-icons">
+        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+        <div class="separator"></div>
+        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+        <div class="separator"></div>
+        <a href="https://www.behance.net/qusaijaber3" target="_blank"><i class="fab fa-behance"></i></a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="bars-container">
+  <div class="top-container">
+    <div class="adobe-container"><div class="adobe-line"></div><span class="adobe-experience">Experience in Adobe Software Tools</span></div>
+    <h1 class="typewriter">Creative Design Expertise</h1>
+    <p>Expert in leveraging advanced design tools to create impactful visual identities, engaging digital content, and high-quality print materials.</p>
+  </div>
+
+  <div class="bar"><div class="percentage-box">0%</div><div class="bar-fill"><span data-percent="95">Adobe Photoshop</span></div></div>
+  <div class="bar"><div class="percentage-box">0%</div><div class="bar-fill"><span data-percent="94">Adobe Illustrator</span></div></div>
+  <div class="bar"><div class="percentage-box">0%</div><div class="bar-fill"><span data-percent="92">Adobe InDesign</span></div></div>
+  <div class="bar"><div class="percentage-box">0%</div><div class="bar-fill"><span data-percent="90">Adobe Premiere Pro</span></div></div>
+</div>
+
+<footer>
+  <p>©️ 2025 Qusai Jaber. All rights reserved. | <a href="#">Privacy Policy</a></p>
+</footer>
+
+<div class="whatsapp-float">
+  <a href="https://wa.me/962788091144" target="_blank"><i class="fab fa-whatsapp"></i></a>
+</div>
+<script>
+function toggleList() {
+  const list = document.getElementById('listItems');
+  list.style.display = list.style.display === 'block' ? 'none' : 'block';
+}
+
+document.addEventListener('click', function(event) {
+  const list = document.getElementById('listItems');
+  const button = document.querySelector('.list-button');
+  if(list.style.display === 'block' && !list.contains(event.target) && event.target !== button){
+    list.style.display = 'none';
+  }
+});
+
+window.addEventListener('load', function() {
+  // Nav links animation
+  const navLinks = document.querySelectorAll('.nav-links a');
+  navLinks.forEach((link, i) => setTimeout(() => link.classList.add('show'), i*200));
+
+  const bars = document.querySelectorAll(".bar-fill span");
+  const boxes = document.querySelectorAll(".percentage-box");
+
+  // تحديد قيم النسب حسب طلبك
+  const percentages = [95, 96, 93, 92];
+
+  function animateBar(index) {
+    if(index >= bars.length) return;
+    const bar = bars[index];
+    const box = boxes[index];
+    const target = percentages[index]; // استخدم القيمة المعدلة
+    const text = bar.textContent;
+    bar.textContent = "";
+    bar.style.width = "0%";
+
+    let current = 0;
+    let frame = 0;
+
+    function step() {
+      frame++;
+      current += 0.5; // سرعة تعبئة البار
+      if(current > target) current = target;
+
+      bar.style.width = current + "%";
+
+      // الرقم جنب البار يتحرك أبطأ
+      if(frame % 3 === 0) { 
+        box.textContent = Math.floor(current) + "%";
+      }
+
+      // النص يظهر تدريجيًا مع تقدم البار
+      const visibleChars = Math.floor((current/target) * text.length);
+      bar.textContent = text.substring(0, visibleChars);
+
+      if(current < target) requestAnimationFrame(step);
+      else setTimeout(() => animateBar(index + 1), 300); // بعد انتهاء البار الحالي يبدأ التالي
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  animateBar(0);
+});
+</script>
+</body>
+</html>
